@@ -4,7 +4,7 @@
     <application>
         <activity
             android:name=".SplashAppActivity"
-            android:exported="true" />
+            android:exported="false" />
     </application>
 
 </manifest>
