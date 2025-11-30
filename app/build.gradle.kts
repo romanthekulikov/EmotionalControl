@@ -47,4 +47,5 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation(project(":feature:auth"))
+    implementation(project(":feature:splash"))
 }

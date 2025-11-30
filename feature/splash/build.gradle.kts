@@ -1,13 +1,10 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    id("kotlin-kapt")
-    id("com.google.devtools.ksp") version "2.1.0-1.0.29"
-    id("com.google.gms.google-services") version "4.4.4" apply false
 }
 
 android {
-    namespace = "ru.kulikov.auth"
+    namespace = "com.example.splash"
     compileSdk = 36
 
     defaultConfig {
@@ -17,17 +14,10 @@ android {
         consumerProguardFiles("consumer-rules.pro")
     }
 
-    buildFeatures {
-        viewBinding = true
-    }
-
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
     compileOptions {
@@ -49,11 +39,4 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-    implementation(libs.firebase.auth)
-
-    implementation(project(":core"))
-    kapt(libs.dagger.compiler)
-
-    ksp("com.github.romanthekulikov.SVMG:processor:0.1.2")
 }

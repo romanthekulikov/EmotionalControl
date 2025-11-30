@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    id("com.google.devtools.ksp") version "2.1.0-1.0.29"
     id("kotlin-kapt")
 }
 
@@ -42,8 +43,11 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    api(libs.rktools)
+    // Firebase
+    api(platform(libs.firebase.bom))
 
+    api(libs.rktools)
+    api("com.github.romanthekulikov.SVMG:processor:0.1.2")
     //dagger2
     api(libs.dagger)
     kapt(libs.dagger.compiler)

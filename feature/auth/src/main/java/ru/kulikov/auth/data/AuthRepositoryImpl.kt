@@ -1,15 +1,22 @@
 package ru.kulikov.auth.data
 
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.roman_kulikov.tools.Result
+import kotlinx.coroutines.tasks.await
 import ru.kulikov.auth.domain.AuthRepository
 import javax.inject.Inject
 
-class AuthRepositoryImpl @Inject constructor() : AuthRepository {
-    override fun auth(email: String, pass: String): Result<Boolean> {
-        TODO("Not yet implemented")
+internal class AuthRepositoryImpl @Inject constructor() : AuthRepository {
+    val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
+
+    override suspend fun auth(email: String, pass: String): Result<FirebaseUser?> {
+        val result = auth.signInWithEmailAndPassword(email, pass).await()
+        return Result.Success(result.user)
     }
 
-    override fun createAccount(email: String, pass: String): Result<Boolean> {
-        TODO("Not yet implemented")
+    override suspend fun createAccount(email: String, pass: String): Result<FirebaseUser?> {
+        val result = auth.createUserWithEmailAndPassword(email, pass).await()
+        return Result.Success(result.user)
     }
 }
