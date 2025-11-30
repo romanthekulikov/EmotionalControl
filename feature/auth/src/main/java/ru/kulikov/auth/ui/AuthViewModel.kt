@@ -1,34 +1,35 @@
 package ru.kulikov.auth.ui
 
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import ru.kulikov.auth.di.AuthComponent
 import ru.kulikov.auth.domain.AuthorizeContract
 import ru.kulikov.auth.domain.use_cases.AuthUseCase
 import ru.kulikov.auth.domain.use_cases.CreateAccountUseCase
-import ru.kulikov.core.BaseViewModel
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 
-class AuthViewModel : BaseViewModel(), AuthorizeContract {
-    @Inject
-    lateinit var authUseCase: AuthUseCase
+class AuthViewModel : AuthStateHandler(), AuthorizeContract, CoroutineScope {
+
+    override val coroutineContext: CoroutineContext = Dispatchers.IO
 
     @Inject
-    lateinit var createAccountUseCase: CreateAccountUseCase
+    internal lateinit var authUseCase: AuthUseCase
+
+    @Inject
+    internal lateinit var createAccountUseCase: CreateAccountUseCase
 
     init {
         AuthComponent.getInstance().inject(this)
     }
 
-    override fun auth(email: String, pass: String) {
-        launch { authUseCase(email, pass) }
+    override fun auth() {
+        launch { authUseCase(_state.value.email, _state.value.pass) }
     }
 
-    override fun createAccount(
-        email: String,
-        pass: String,
-        confirmPass: String
-    ) {
-        launch { createAccountUseCase(email, pass, confirmPass) }
+    override fun createAccount() {
+        launch { createAccountUseCase(_state.value.email, _state.value.pass, _state.value.confirmPass) }
     }
 
 }

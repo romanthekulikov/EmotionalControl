@@ -1,8 +1,9 @@
 package ru.kulikov.auth.domain
 
+import com.google.firebase.auth.FirebaseUser
 import com.roman_kulikov.tools.Result
 
-interface AuthRepository {
-    fun auth(email: String, pass: String): Result<Boolean>
-    fun createAccount(email: String, pass: String): Result<Boolean>
+internal interface AuthRepository {
+    suspend fun auth(email: String, pass: String): Result<FirebaseUser?>
+    suspend fun createAccount(email: String, pass: String): Result<FirebaseUser?>
 }
