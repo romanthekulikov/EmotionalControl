@@ -1,20 +1,24 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
+    id("kotlin-kapt")
+    id("com.google.devtools.ksp") version "2.1.0-1.0.29"
+    id("com.google.gms.google-services") version "4.4.4" apply false
 }
 
 android {
-    namespace = "ru.kulikov.emotionalcontrol"
+    namespace = "ru.kulikov.auth"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "ru.kulikov.emotionalcontrol"
         minSdk = 24
-        targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 
     buildTypes {
@@ -46,5 +50,10 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    implementation(project(":feature:auth"))
+    implementation(libs.firebase.auth)
+
+    implementation(project(":core"))
+    kapt(libs.dagger.compiler)
+
+    ksp("com.github.romanthekulikov.SVMG:processor:0.1.2")
 }
