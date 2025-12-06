@@ -6,8 +6,10 @@ plugins {
 }
 
 android {
-    namespace = "ru.kulikov.core"
-    compileSdk = 36
+    namespace = "ru.kulikov.enter"
+    compileSdk {
+        version = release(36)
+    }
 
     defaultConfig {
         minSdk = 24
@@ -35,7 +37,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -43,12 +44,8 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    // Firebase
-    api(platform(libs.firebase.bom))
+    implementation(project(":core"))
+    /*kapt(libs.dagger.compiler)*/
 
-    api(libs.rktools)
-    api("com.github.romanthekulikov.SVMG:processor:0.1.2")
-    //dagger2
-    api(libs.dagger)
-    kapt(libs.dagger.compiler)
+    /*ksp("com.github.romanthekulikov.SVMG:processor:0.1.2")*/
 }
