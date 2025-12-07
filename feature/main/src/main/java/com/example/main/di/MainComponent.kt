@@ -1,6 +1,7 @@
 package com.example.main.di
 
 import com.example.main.di.modules.MainModule
+import com.example.main.ui.MainActivity
 import com.example.main.ui.MainViewModel
 import dagger.Component
 import ru.kulikov.core.utils.di.CoreComponent
@@ -16,6 +17,7 @@ interface MainComponent {
         fun build(): MainComponent
     }
 
+    fun inject(activity: MainActivity)
     fun inject(viewModel: MainViewModel)
 
     companion object {
@@ -23,7 +25,7 @@ interface MainComponent {
 
         fun init(coreComponent: CoreComponent): MainComponent {
             if (instance == null) {
-
+                instance = DaggerMainComponent.builder().coreComponent(coreComponent).build()
             }
 
             return instance!!
