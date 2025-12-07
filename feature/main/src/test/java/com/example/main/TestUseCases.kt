@@ -2,6 +2,7 @@ package com.example.main
 
 import com.example.main.data.MainExceptionCatcher
 import com.example.main.domain.MainRepository
+import com.example.main.domain.use_cases.impl.GetEmojiUcImpl
 import com.example.main.domain.use_cases.impl.GetPartnerIndicatorsUcImpl
 import com.example.main.domain.use_cases.impl.GetUserIndicatorsUcImpl
 import com.example.main.domain.use_cases.impl.SaveIndicatorUcImpl
@@ -53,5 +54,20 @@ class TestUseCases {
         val saveIndicatorUc = SaveIndicatorUcImpl(repoMock, catcherMockk)
         val result = saveIndicatorUc(indicator)
         (result as Result.Success).data shouldBe true
+    }
+
+    @Test
+    fun `get emoji resource id`() {
+        val useCase = GetEmojiUcImpl()
+        useCase(0.0) shouldBe R.drawable.ic_angry_emotional
+        useCase(0.20) shouldBe R.drawable.ic_angry_emotional
+        useCase(0.21) shouldBe R.drawable.ic_sad_emotional
+        useCase(0.40) shouldBe R.drawable.ic_sad_emotional
+        useCase(0.41) shouldBe R.drawable.ic_medium_emotional
+        useCase(0.60) shouldBe R.drawable.ic_medium_emotional
+        useCase(0.61) shouldBe R.drawable.ic_good_emotional
+        useCase(0.80) shouldBe R.drawable.ic_good_emotional
+        useCase(0.81) shouldBe R.drawable.ic_max_emotional
+        useCase(1.0) shouldBe R.drawable.ic_max_emotional
     }
 }

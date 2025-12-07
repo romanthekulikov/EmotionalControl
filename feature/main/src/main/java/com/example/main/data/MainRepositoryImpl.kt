@@ -25,8 +25,8 @@ class MainRepositoryImpl @Inject constructor(private val sharedPreferences: AppS
             .equalTo(partnerId.toDouble()).get().await().children.firstOrNull()?.key
 
         if (partnerFirebaseId == null) throw IllegalStateException()
-
-        return Result.Success(getIndicators(partnerFirebaseId))
+        val t = getIndicators(partnerFirebaseId)
+        return Result.Success(t)
     }
 
     override suspend fun saveIndicator(indicator: Indicator): Result<Boolean> {
@@ -38,6 +38,10 @@ class MainRepositoryImpl @Inject constructor(private val sharedPreferences: AppS
             .indicatorReference(indicator.name).setValue(indicator.percent)
 
         return Result.Success(true)
+    }
+
+    override fun forgotPartnerId() {
+        sharedPreferences.forgotPartnerId()
     }
 
     private suspend fun getIndicators(firebaseUserId: String): List<Indicator> {

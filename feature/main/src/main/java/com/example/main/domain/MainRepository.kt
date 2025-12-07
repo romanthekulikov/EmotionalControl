@@ -7,4 +7,5 @@ interface MainRepository {
     suspend fun getUserIndicators(): Result<List<Indicator>>
     suspend fun getPartnerIndicators(): Result<List<Indicator>>
     suspend fun saveIndicator(indicator: Indicator): Result<Boolean>
+    fun forgotPartnerId()
 }

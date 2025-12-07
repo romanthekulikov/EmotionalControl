@@ -3,9 +3,13 @@ package com.example.main.di.modules
 import com.example.main.data.MainExceptionCatcher
 import com.example.main.data.MainRepositoryImpl
 import com.example.main.domain.MainRepository
+import com.example.main.domain.use_cases.ForgotPartnerIdUc
+import com.example.main.domain.use_cases.GetEmojiUc
 import com.example.main.domain.use_cases.GetPartnerIndicatorsUc
 import com.example.main.domain.use_cases.GetUserIndicatorsUc
 import com.example.main.domain.use_cases.SaveIndicatorUc
+import com.example.main.domain.use_cases.impl.ForgotPartnerIdUcImpl
+import com.example.main.domain.use_cases.impl.GetEmojiUcImpl
 import com.example.main.domain.use_cases.impl.GetPartnerIndicatorsUcImpl
 import com.example.main.domain.use_cases.impl.GetUserIndicatorsUcImpl
 import com.example.main.domain.use_cases.impl.SaveIndicatorUcImpl
@@ -32,6 +36,14 @@ interface MainModule {
     @Singleton
     @Binds
     fun bindSaveUserUc(saveIndicatorUc: SaveIndicatorUcImpl): SaveIndicatorUc
+
+    @Singleton
+    @Binds
+    fun bindGetEmojiUc(getEmojiUcImpl: GetEmojiUcImpl): GetEmojiUc
+
+    @Singleton
+    @Binds
+    fun bindForgotPartnerIdUc(forgotPartnerIdUcImpl: ForgotPartnerIdUcImpl): ForgotPartnerIdUc
 
     @Singleton
     @Binds

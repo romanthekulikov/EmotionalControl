@@ -1,6 +1,7 @@
 package ru.kulikov.emotionalcontrol
 
 import android.app.Application
+import com.example.main.di.MainComponent
 import com.example.main.ui.MainActivity
 import com.example.splash.di.SplashComponent
 import com.google.firebase.FirebaseApp
@@ -23,6 +24,7 @@ class EmotionalControlApp : Application() {
         val coreComponent = CoreComponent.init(applicationContext)
         AuthComponent.init(coreComponent)
         SplashComponent.init(coreComponent)
+        MainComponent.init(coreComponent)
     }
 
     private fun setRouter() {

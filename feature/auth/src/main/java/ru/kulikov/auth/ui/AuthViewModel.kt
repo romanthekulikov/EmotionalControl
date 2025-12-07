@@ -46,7 +46,7 @@ class AuthViewModel() : AuthStateHandler(), AuthorizeContract, CoroutineScope {
             is Result.NoNetwork<*> -> _events.emit(UiEvent.ShowToast("No internet connection"))
             is Result.Success<*> -> {
                 _events.emit(UiEvent.ShowToast("Success"))
-                // TODO: Navigate to enter screen
+                _events.emit(UiEvent.Navigate)
             }
         }
     }
