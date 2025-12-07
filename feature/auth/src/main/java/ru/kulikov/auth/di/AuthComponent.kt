@@ -2,6 +2,7 @@ package ru.kulikov.auth.di
 
 import dagger.Component
 import ru.kulikov.auth.di.modules.AuthModule
+import ru.kulikov.auth.ui.AuthActivity
 import ru.kulikov.auth.ui.AuthViewModel
 import ru.kulikov.core.utils.di.CoreComponent
 import javax.inject.Singleton
@@ -16,6 +17,7 @@ interface AuthComponent {
         fun build(): AuthComponent
     }
 
+    fun inject(activity: AuthActivity)
     fun inject(authViewModel: AuthViewModel)
 
     companion object {

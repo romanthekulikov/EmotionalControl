@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "ru.kulikov.emotionalcontrol"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -48,6 +48,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation(project(":core"))
-    implementation(project(":feature:auth"))
     implementation(project(":feature:splash"))
+    implementation(project(":feature:auth"))
+    implementation(project(":feature:main"))
 }

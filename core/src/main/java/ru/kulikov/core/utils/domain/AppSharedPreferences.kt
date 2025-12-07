@@ -10,4 +10,8 @@ interface AppSharedPreferences {
     fun savePartnerId(partnerId: UserId)
     fun getPartnerId(): UserId
     fun containsPartnerId(): Boolean
+
+    fun forgotUserId()
+
+    fun forgotPartnerId()
 }
