@@ -1,5 +1,6 @@
 package com.example.main.di.modules
 
+import com.example.main.data.MainExceptionCatcher
 import com.example.main.data.MainRepositoryImpl
 import com.example.main.domain.MainRepository
 import com.example.main.domain.use_cases.GetPartnerIndicatorsUc
@@ -8,6 +9,7 @@ import com.example.main.domain.use_cases.SaveIndicatorUc
 import com.example.main.domain.use_cases.impl.GetPartnerIndicatorsUcImpl
 import com.example.main.domain.use_cases.impl.GetUserIndicatorsUcImpl
 import com.example.main.domain.use_cases.impl.SaveIndicatorUcImpl
+import com.roman_kulikov.tools.ExceptionCatcher
 import dagger.Binds
 import dagger.Module
 import javax.inject.Singleton
@@ -30,4 +32,8 @@ interface MainModule {
     @Singleton
     @Binds
     fun bindSaveUserUc(saveIndicatorUc: SaveIndicatorUcImpl): SaveIndicatorUc
+
+    @Singleton
+    @Binds
+    fun bindExceptionCatcher(mainExceptionCatcher: MainExceptionCatcher): ExceptionCatcher
 }
