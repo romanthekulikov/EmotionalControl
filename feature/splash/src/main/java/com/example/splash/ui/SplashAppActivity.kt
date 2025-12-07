@@ -5,10 +5,21 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.splash.R
+import com.example.splash.di.SplashComponent
+import ru.kulikov.core.utils.router.Router
+import ru.kulikov.core.utils.router.Screen
+import javax.inject.Inject
 
 class SplashAppActivity : AppCompatActivity() {
 
+    @Inject
+    lateinit var router: Router
+
     private val viewModel: SplashViewModel by viewModels()
+
+    init {
+        SplashComponent.getInstance().inject(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,7 +30,7 @@ class SplashAppActivity : AppCompatActivity() {
         } else if (viewModel.needNavigateToMain()) {
             // TODO: Navigate to main screen
         } else {
-            // TODO: Navigate to auth screen
+            router.navigateTo(Screen.AuthScreen(this))
         }
     }
 }

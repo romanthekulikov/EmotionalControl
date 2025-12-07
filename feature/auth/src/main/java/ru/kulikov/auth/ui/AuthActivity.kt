@@ -1,5 +1,7 @@
 package ru.kulikov.auth.ui
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -138,6 +140,12 @@ class AuthActivity : BaseActivity() {
             val ime = insets.getInsets(WindowInsetsCompat.Type.ime())
             v.setPadding(0, 0, 0, ime.bottom)
             insets
+        }
+    }
+
+    companion object {
+        fun createIntent(fromContext: Context): Intent {
+            return Intent(fromContext, AuthActivity::class.java)
         }
     }
 }
