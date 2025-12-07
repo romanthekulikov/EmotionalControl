@@ -8,7 +8,9 @@ import com.example.main.domain.MainContract
 import com.example.main.domain.use_cases.ForgotPartnerIdUc
 import com.example.main.domain.use_cases.GetEmojiUc
 import com.example.main.domain.use_cases.GetPartnerIndicatorsUc
+import com.example.main.domain.use_cases.GetPartnerNameUc
 import com.example.main.domain.use_cases.GetUserIndicatorsUc
+import com.example.main.domain.use_cases.GetUserNameUc
 import com.example.main.domain.use_cases.SaveIndicatorUc
 import com.roman_kulikov.tools.Result
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -35,10 +37,22 @@ class MainViewModel : MainStateHandler(), MainContract {
     @Inject
     lateinit var forgotPartnerId: ForgotPartnerIdUc
 
+    @Inject
+    lateinit var getUserNameUc: GetUserNameUc
+
+    @Inject
+    lateinit var getPartnerNameUc: GetPartnerNameUc
+
     private var dataSaved: Boolean = true
 
     private val _events = MutableSharedFlow<UiEvent>()
     val events = _events.asSharedFlow()
+    override fun loadData() {
+        getUserIndicators()
+        getPartnerIndicators()
+        getUserName()
+        getPartnerName()
+    }
 
     init {
         MainComponent.getInstance().inject(this)
@@ -59,6 +73,14 @@ class MainViewModel : MainStateHandler(), MainContract {
 
     override fun forgotPartnerId() {
         forgotPartnerId.invoke()
+    }
+
+    override fun getUserName() {
+        viewModelScope.launch { handleGetUserNameResult(getUserNameUc()) }
+    }
+
+    override fun getPartnerName() {
+        viewModelScope.launch { handleGetPartnerNameResult(getPartnerNameUc()) }
     }
 
     override fun setUserEmotionalIndicator(value: Double) {
@@ -102,6 +124,26 @@ class MainViewModel : MainStateHandler(), MainContract {
             is Result.Success<Boolean> -> {
                 dataSaved = true
                 _events.emit(UiEvent.ShowToast("Success saving"))
+            }
+        }
+    }
+
+    private suspend fun handleGetUserNameResult(result: Result<String>) {
+        when (result) {
+            is Result.Failure<String> -> _events.emit(UiEvent.ShowToast(result.cause))
+            is Result.NoNetwork<String> -> _events.emit(UiEvent.ShowToast("No network"))
+            is Result.Success<String> -> {
+                if (result.data.isEmpty()) setUserName("Your emotional indicator") else setUserName(result.data + " emotional indicator")
+            }
+        }
+    }
+
+    private suspend fun handleGetPartnerNameResult(result: Result<String>) {
+        when (result) {
+            is Result.Failure<String> -> _events.emit(UiEvent.ShowToast(result.cause))
+            is Result.NoNetwork<String> -> _events.emit(UiEvent.ShowToast("No network"))
+            is Result.Success<String> -> {
+                if (result.data.isEmpty()) setPartnerName("Partner emotional indicator") else setPartnerName(result.data + " emotional indicator")
             }
         }
     }
