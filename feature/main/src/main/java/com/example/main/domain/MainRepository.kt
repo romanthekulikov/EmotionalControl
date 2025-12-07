@@ -1,7 +1,7 @@
 package com.example.main.domain
 
 import com.roman_kulikov.tools.Result
-import ru.kulikov.core.utils.data.Indicator
+import ru.kulikov.core.utils.data.models.Indicator
 
 interface MainRepository {
     suspend fun getUserIndicators(): Result<List<Indicator>>
