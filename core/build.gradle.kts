@@ -53,7 +53,13 @@ dependencies {
     api(libs.rktools)
     api(libs.rktools.processor)
 
-    //dagger2
+    // Dagger2
     api(libs.dagger)
     kapt(libs.dagger.compiler)
+
+    // Mockk
+    api(libs.mockk)
+
+    // Kotest
+    api(libs.kotest.assertions.core)
 }
