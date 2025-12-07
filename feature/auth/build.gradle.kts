@@ -1,12 +1,13 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    id("com.google.devtools.ksp") version "2.1.0-1.0.29"
     id("kotlin-kapt")
+    id("com.google.devtools.ksp") version "2.1.0-1.0.29"
+    id("com.google.gms.google-services") version "4.4.4" apply false
 }
 
 android {
-    namespace = "ru.kulikov.core"
+    namespace = "ru.kulikov.auth"
     compileSdk = 36
 
     defaultConfig {
@@ -14,6 +15,10 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 
     buildTypes {
@@ -39,21 +44,14 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    implementation(libs.androidx.activity)
+    implementation(libs.androidx.constraintlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
 
-    // Firebase
-    api(platform(libs.firebase.bom))
-    api(libs.firebase.auth)
-    api(libs.firebase.database)
-
-    // RKTools
-    api(libs.rktools)
-    api(libs.rktools.processor)
-
-    //dagger2
-    api(libs.dagger)
+    implementation(project(":core"))
     kapt(libs.dagger.compiler)
+
+    ksp("com.github.romanthekulikov.SVMG:processor:0.1.2")
 }

@@ -3,7 +3,9 @@
 
     <application>
         <activity
-            android:name=".SplashAppActivity"
+            android:name=".ui.AuthActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:fitsSystemWindows="true"
             android:exported="true" />
     </application>
 
