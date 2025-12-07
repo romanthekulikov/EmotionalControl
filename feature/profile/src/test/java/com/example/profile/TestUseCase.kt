@@ -1,5 +1,6 @@
 package com.example.profile
 
+import com.example.profile.data.ProfileExceptionCatcher
 import com.example.profile.domain.ProfileRepository
 import com.example.profile.domain.use_cases.impl.GetUserUcImpl
 import com.example.profile.domain.use_cases.impl.SaveUserUcImpl
@@ -15,7 +16,8 @@ import ru.kulikov.core.utils.data.models.UserModel
 class TestUseCase {
 
     private val repoMockk = mockk<ProfileRepository>()
-    private val userMockk = UserModel(-1, "https://", "Name")
+    private val userMockk = UserModel(-1, "Name")
+    private val exceptionCatcher = ProfileExceptionCatcher()
 
     @Before
     fun initMockk() {
@@ -25,18 +27,17 @@ class TestUseCase {
 
     @Test
     fun `get user`(): Unit = runBlocking {
-        val useCase = GetUserUcImpl(repoMockk)
+        val useCase = GetUserUcImpl(repoMockk, exceptionCatcher)
         val result = useCase()
         result as Result.Success
         result.data.userId shouldBe -1
-        result.data.avatarUrl shouldBe "https://"
         result.data.name shouldBe "Name"
     }
 
     @Test
     fun `save user`(): Unit = runBlocking {
-        val useCase = SaveUserUcImpl(repoMockk)
-        val result = useCase()
+        val useCase = SaveUserUcImpl(repoMockk, exceptionCatcher)
+        val result = useCase(userMockk)
         result as Result.Success
         result.data shouldBe true
     }

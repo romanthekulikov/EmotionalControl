@@ -10,7 +10,5 @@ data class ProfileState(
     @StateField(FunctionTarget.SET)
     val name: String = "",
     @StateField(FunctionTarget.SET)
-    val avatarUrl: String = "",
-    @StateField(FunctionTarget.SET)
     val userId: UserId = -1,
 )
