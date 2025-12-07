@@ -1,6 +1,7 @@
 package com.example.splash.di
 
 import com.example.splash.di.modules.SplashModule
+import com.example.splash.ui.SplashAppActivity
 import com.example.splash.ui.SplashViewModel
 import dagger.Component
 import ru.kulikov.core.utils.di.CoreComponent
@@ -16,6 +17,7 @@ interface SplashComponent {
         fun build(): SplashComponent
     }
 
+    fun inject(activity: SplashAppActivity)
     fun inject(viewModel: SplashViewModel)
 
     companion object {
