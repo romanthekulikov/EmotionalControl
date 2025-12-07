@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.kulikov.core.utils.base.UiEvent
 import ru.kulikov.core.utils.router.Router
+import ru.kulikov.core.utils.router.Screen
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -53,7 +54,7 @@ class MainActivity : AppCompatActivity() {
         addListeners()
         binding.seekPartner.isEnabled = false
 
-        loadData()
+        viewModel.loadData()
     }
 
     private fun observeState() {
@@ -61,16 +62,13 @@ class MainActivity : AppCompatActivity() {
             viewModel.state.collectLatest { state ->
                 binding.seekPartner.progress = (state.partnerEmotionalIndicator * 100).toInt()
                 binding.imagePartnerEmoji.setImageResource(state.partnerEmotionalEmoji)
+                binding.textPartnerIndicator.text = state.partnerName
 
                 binding.seekUser.progress = (state.userEmotionalIndicator * 100).toInt()
                 binding.imageUserEmoji.setImageResource(state.userEmotionalEmoji)
+                binding.textUserIndicator.text = state.userName
             }
         }
-    }
-
-    private fun loadData() {
-        viewModel.getPartnerIndicators()
-        viewModel.getUserIndicators()
     }
 
     private fun addEventListener() {
@@ -79,8 +77,7 @@ class MainActivity : AppCompatActivity() {
                 viewModel.events.collect { event ->
                     when (event) {
                         is UiEvent.ShowToast -> Toast.makeText(this@MainActivity, event.message, Toast.LENGTH_LONG).show()
-                        UiEvent.Navigate -> {
-
+                        UiEvent.Navigate -> { /* Nothing */
                         }
                     }
                 }
@@ -91,6 +88,10 @@ class MainActivity : AppCompatActivity() {
     private fun addListeners() {
         binding.buttonBack.setOnClickListener {
             viewModel.forgotPartnerId()
+        }
+
+        binding.buttonProfile.setOnClickListener {
+            router.navigateTo(Screen.ProfileScreen(this))
         }
 
         binding.seekUser.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {

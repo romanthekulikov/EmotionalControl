@@ -6,12 +6,16 @@ import com.example.main.domain.MainRepository
 import com.example.main.domain.use_cases.ForgotPartnerIdUc
 import com.example.main.domain.use_cases.GetEmojiUc
 import com.example.main.domain.use_cases.GetPartnerIndicatorsUc
+import com.example.main.domain.use_cases.GetPartnerNameUc
 import com.example.main.domain.use_cases.GetUserIndicatorsUc
+import com.example.main.domain.use_cases.GetUserNameUc
 import com.example.main.domain.use_cases.SaveIndicatorUc
 import com.example.main.domain.use_cases.impl.ForgotPartnerIdUcImpl
 import com.example.main.domain.use_cases.impl.GetEmojiUcImpl
 import com.example.main.domain.use_cases.impl.GetPartnerIndicatorsUcImpl
+import com.example.main.domain.use_cases.impl.GetPartnerNameUcImpl
 import com.example.main.domain.use_cases.impl.GetUserIndicatorsUcImpl
+import com.example.main.domain.use_cases.impl.GetUserNameUcImpl
 import com.example.main.domain.use_cases.impl.SaveIndicatorUcImpl
 import com.roman_kulikov.tools.ExceptionCatcher
 import dagger.Binds
@@ -44,6 +48,14 @@ interface MainModule {
     @Singleton
     @Binds
     fun bindForgotPartnerIdUc(forgotPartnerIdUcImpl: ForgotPartnerIdUcImpl): ForgotPartnerIdUc
+
+    @Singleton
+    @Binds
+    fun bindGetUserNameUc(getUserNameUcImpl: GetUserNameUcImpl): GetUserNameUc
+
+    @Singleton
+    @Binds
+    fun bindGetPartnerNameUc(getPartnerNameUcImpl: GetPartnerNameUcImpl): GetPartnerNameUc
 
     @Singleton
     @Binds
