@@ -1,4 +1,4 @@
-package ru.kulikov.core.utils.data
+package ru.kulikov.core.utils.data.models
 
 sealed interface Indicator {
     val name: String

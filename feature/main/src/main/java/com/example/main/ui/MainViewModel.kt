@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.kulikov.core.utils.base.UiEvent
-import ru.kulikov.core.utils.data.Indicator
+import ru.kulikov.core.utils.data.models.Indicator
 import javax.inject.Inject
 
 class MainViewModel : MainStateHandler(), MainContract {

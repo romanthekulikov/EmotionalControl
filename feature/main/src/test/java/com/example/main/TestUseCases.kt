@@ -12,7 +12,7 @@ import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
-import ru.kulikov.core.utils.data.Indicator
+import ru.kulikov.core.utils.data.models.Indicator
 
 class TestUseCases {
     val repoMock = mockk<MainRepository>()
