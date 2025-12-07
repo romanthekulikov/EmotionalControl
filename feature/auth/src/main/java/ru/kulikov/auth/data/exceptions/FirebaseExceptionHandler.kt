@@ -1,7 +1,6 @@
 package ru.kulikov.auth.data.exceptions
 
 import android.util.Log
-import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
@@ -26,7 +25,7 @@ internal class FirebaseExceptionHandler @Inject constructor() : ExceptionCatcher
         } catch (e: FirebaseAuthWeakPasswordException) {
             logException(e)
             Result.Failure("Password isn't protected")
-        } catch (e: FirebaseException) {
+        } catch (e: Exception) {
             logException(e)
             Result.Failure("Error!")
         }
@@ -47,7 +46,7 @@ internal class FirebaseExceptionHandler @Inject constructor() : ExceptionCatcher
         } catch (e: FirebaseAuthWeakPasswordException) {
             logException(e)
             Result.Failure("Password isn't protected")
-        } catch (e: FirebaseException) {
+        } catch (e: Exception) {
             logException(e)
             Result.Failure("Error!")
         }

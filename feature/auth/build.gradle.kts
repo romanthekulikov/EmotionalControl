@@ -50,8 +50,6 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
-    implementation(libs.firebase.auth)
-
     implementation(project(":core"))
     kapt(libs.dagger.compiler)
 

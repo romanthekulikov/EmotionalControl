@@ -1,80 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="12dp"
+    android:layout_height="wrap_content"
+    android:fillViewport="true"
     tools:context=".ui.AuthActivity">
 
-    <ImageView
-        android:id="@+id/image_avatar"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:src="@drawable/icon_avatar"
-        app:layout_constraintBottom_toTopOf="@+id/text_authorize"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/text_authorize"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/text_authorize"
-        android:textColor="#000"
-        android:textSize="28sp"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintTop_toBottomOf="@+id/image_avatar"
-        tools:layout_editor_absoluteX="12dp" />
+        android:padding="12dp">
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/text_switch_mode"
-        app:layout_constraintTop_toBottomOf="@+id/text_authorize"
-        tools:layout_editor_absoluteX="12dp">
+        <ImageView
+            android:id="@+id/image_avatar"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/icon_avatar"
+            app:layout_constraintBottom_toTopOf="@+id/text_authorize"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/input_email"
+        <TextView
+            android:id="@+id/text_authorize"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_email_address" />
+            android:text="@string/text_authorize"
+            android:textColor="#000"
+            android:textSize="28sp"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"
+            app:layout_constraintTop_toBottomOf="@+id/image_avatar"
+            tools:layout_editor_absoluteX="12dp" />
 
-        <EditText
-            android:id="@+id/input_password"
+        <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:hint="@string/hint_password" />
-    </LinearLayout>
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/text_switch_mode"
+            app:layout_constraintTop_toBottomOf="@+id/text_authorize"
+            tools:layout_editor_absoluteX="12dp">
 
-    <Button
-        android:id="@+id/enter_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/common_google_signin_btn_text_dark"
-        android:text="@string/text_authorize"
-        app:layout_constraintBottom_toTopOf="@+id/text_switch_mode"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+            <EditText
+                android:id="@+id/input_email"
+                android:inputType="textEmailAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_email_address" />
+
+            <EditText
+                android:id="@+id/input_password"
+                android:inputType="textPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="@string/hint_password" />
+
+            <EditText
+                android:id="@+id/input_confirm_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:hint="@string/hint_confirm_password" />
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:background="@color/button"
+            android:padding="8dp"
+            android:id="@+id/enter_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_authorize"
+            android:layout_marginTop="22dp"
+            app:layout_constraintBottom_toTopOf="@+id/text_switch_mode"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
 
-    <TextView
-        android:id="@+id/text_switch_mode"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/text_or_create_account"
-        android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enter_button"
-        tools:layout_editor_absoluteX="12dp" />
+        <TextView
+            android:id="@+id/text_switch_mode"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/text_or_create_account"
+            android:textSize="18sp"
+            android:layout_marginTop="22dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/enter_button"
+            tools:layout_editor_absoluteX="12dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</ScrollView>

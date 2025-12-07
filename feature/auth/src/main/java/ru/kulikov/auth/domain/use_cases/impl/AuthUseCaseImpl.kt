@@ -14,6 +14,7 @@ internal class AuthUseCaseImpl @Inject constructor(
 ) : AuthUseCase {
     override suspend fun invoke(email: String, pass: String): Result<FirebaseUser?> {
         if (!isEmail(email)) return Result.Failure("Incorrect email address")
+        if (pass.isEmpty()) return Result.Failure("Password is empty")
         return exceptionHandler.launchWithCatch {
             repository.auth(email, pass)
         }
