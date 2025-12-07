@@ -3,7 +3,7 @@
 
     <application>
         <activity
-            android:name=".SplashAppActivity"
+            android:name=".ui.SplashAppActivity"
             android:exported="true" />
     </application>
 

@@ -1,6 +1,7 @@
 package ru.kulikov.emotionalcontrol
 
 import android.app.Application
+import com.example.splash.di.SplashComponent
 import com.google.firebase.FirebaseApp
 import ru.kulikov.auth.di.AuthComponent
 import ru.kulikov.core.utils.di.CoreComponent
@@ -15,5 +16,6 @@ class EmotionalControlApp : Application() {
     private fun initDi() {
         val coreComponent = CoreComponent.init(applicationContext)
         AuthComponent.init(coreComponent)
+        SplashComponent.init(coreComponent)
     }
 }
