@@ -42,12 +42,17 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    implementation(libs.androidx.lifecycle.runtime.ktx)
 
     // Firebase
     api(platform(libs.firebase.bom))
+    api(libs.firebase.auth)
+    api(libs.firebase.database)
 
+    // RKTools
     api(libs.rktools)
-    api("com.github.romanthekulikov.SVMG:processor:0.1.2")
+    api(libs.rktools.processor)
+
     //dagger2
     api(libs.dagger)
     kapt(libs.dagger.compiler)

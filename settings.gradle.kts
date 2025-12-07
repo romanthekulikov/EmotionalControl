@@ -26,7 +26,8 @@ dependencyResolutionManagement {
 
 rootProject.name = "EmotionalControl"
 include(":app")
-include(":feature")
 include(":core")
+include(":feature")
+include(":feature:auth")
 include(":feature:splash")
 include(":feature:enter")
