@@ -53,5 +53,5 @@ dependencies {
     implementation(project(":core"))
     kapt(libs.dagger.compiler)
 
-    ksp("com.github.romanthekulikov.SVMG:processor:0.1.2")
+    ksp(libs.rktools.processor)
 }
