@@ -18,13 +18,25 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.kulikov.auth.R
 import ru.kulikov.auth.databinding.ActivityAuthBinding
+import ru.kulikov.auth.di.AuthComponent
 import ru.kulikov.core.utils.base.BaseActivity
 import ru.kulikov.core.utils.base.UiEvent
+import ru.kulikov.core.utils.router.Router
+import ru.kulikov.core.utils.router.Screen
+import javax.inject.Inject
 
 class AuthActivity : BaseActivity() {
+
+    @Inject
+    lateinit var router: Router
+
     private lateinit var binding: ActivityAuthBinding
     val viewModel: AuthViewModel by viewModels {
         AuthViewModel.Factory()
+    }
+
+    init {
+        AuthComponent.getInstance().inject(this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +52,7 @@ class AuthActivity : BaseActivity() {
                 viewModel.events.collect { event ->
                     when (event) {
                         is UiEvent.ShowToast -> Toast.makeText(this@AuthActivity, event.message, Toast.LENGTH_LONG).show()
+                        UiEvent.Navigate -> router.navigateTo(Screen.MainScreen(this@AuthActivity)) // TODO: Заменить на Enter
                     }
                 }
             }

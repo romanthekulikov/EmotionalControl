@@ -1,6 +1,8 @@
 package ru.kulikov.emotionalcontrol
 
 import android.app.Application
+import com.example.main.di.MainComponent
+import com.example.main.ui.MainActivity
 import com.example.splash.di.SplashComponent
 import com.google.firebase.FirebaseApp
 import ru.kulikov.auth.di.AuthComponent
@@ -22,6 +24,7 @@ class EmotionalControlApp : Application() {
         val coreComponent = CoreComponent.init(applicationContext)
         AuthComponent.init(coreComponent)
         SplashComponent.init(coreComponent)
+        MainComponent.init(coreComponent)
     }
 
     private fun setRouter() {
@@ -29,6 +32,7 @@ class EmotionalControlApp : Application() {
             override fun navigateTo(screen: Screen) {
                 when (screen) {
                     is Screen.AuthScreen -> screen.fromActivity.startActivity(AuthActivity.createIntent(screen.fromActivity))
+                    is Screen.MainScreen -> screen.fromActivity.startActivity(MainActivity.createIntent(screen.fromActivity))
                 }
             }
 
