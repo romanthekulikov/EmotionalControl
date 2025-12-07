@@ -1,30 +1,25 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    id("com.google.gms.google-services")
+    id("kotlin-kapt")
+    id("com.google.devtools.ksp") version "2.1.0-1.0.29"
 }
 
 android {
-    namespace = "ru.kulikov.emotionalcontrol"
+    namespace = "com.example.main"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "ru.kulikov.emotionalcontrol"
         minSdk = 24
-        targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
     compileOptions {
@@ -33,6 +28,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
+    }
+    buildFeatures {
+        viewBinding = true
     }
 }
 
@@ -48,7 +46,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation(project(":core"))
-    implementation(project(":feature:splash"))
-    implementation(project(":feature:auth"))
-    implementation(project(":feature:main"))
+    kapt(libs.dagger.compiler)
+
+    ksp(libs.rktools.processor)
 }
