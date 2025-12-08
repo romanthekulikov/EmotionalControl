@@ -1,5 +1,8 @@
 import java.net.URI
 
+include(":feature:enter")
+
+
 include(":feature:main")
 
 
