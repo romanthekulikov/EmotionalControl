@@ -16,6 +16,6 @@ class PartnerStatisticByPeriodUseCaseImpl @Inject constructor(
         start: LocalDate,
         end: LocalDate?
     ): Result<Statistic> {
-        TODO("Not yet implemented")
+        return exceptionCatcher.launchWithCatch { repository.partnerStatisticByPeriod(start, end) }
     }
 }

@@ -12,6 +12,6 @@ class FirstRecordDateUseCaseImpl @Inject constructor(
     private val exceptionCatcher: ExceptionCatcher,
 ) : FirstRecordDateUseCase {
     override suspend fun invoke(): Result<LocalDate> {
-        TODO("Not yet implemented")
+        return exceptionCatcher.launchWithCatch { repository.firstRecordDate() }
     }
 }
