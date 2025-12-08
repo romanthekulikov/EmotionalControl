@@ -7,5 +7,5 @@ import com.roman_kulikov.processor.annotations.UIState
 @UIState
 data class EnterState(
     @StateField(FunctionTarget.SET)
-    val partnerId: Int? = null
+    val partnerId: Int = 0
 )
