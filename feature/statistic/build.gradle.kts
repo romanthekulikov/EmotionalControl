@@ -1,21 +1,21 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    id("com.google.gms.google-services")
+    id("kotlin-kapt")
+    id("com.google.devtools.ksp") version "2.1.0-1.0.29"
 }
 
 android {
-    namespace = "ru.kulikov.emotionalcontrol"
-    compileSdk = 36
+    namespace = "ru.kulikov.statistic"
+    compileSdk {
+        version = release(36)
+    }
 
     defaultConfig {
-        applicationId = "ru.kulikov.emotionalcontrol"
-        minSdk = 26
-        targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
+        minSdk = 24
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -37,7 +37,6 @@ android {
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -48,9 +47,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
 
     implementation(project(":core"))
-    implementation(project(":feature:splash"))
-    implementation(project(":feature:auth"))
-    implementation(project(":feature:main"))
-    implementation(project(":feature:statistic"))
+    kapt(libs.dagger.compiler)
 
+    ksp(libs.rktools.processor)
 }
