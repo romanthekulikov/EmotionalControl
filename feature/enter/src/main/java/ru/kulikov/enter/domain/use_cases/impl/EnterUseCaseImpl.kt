@@ -10,7 +10,6 @@ class EnterUseCaseImpl @Inject constructor(
     private val repository: EnterRepository,
     private val exceptionCatcher: ExceptionCatcher,
 ) : EnterUseCase {
-    override suspend fun invoke(partnerId: Int): Result<Boolean> {
-        TODO("Not yet implemented")
-    }
+    override suspend fun invoke(partnerId: Int): Result<Boolean> =
+        exceptionCatcher.launchWithCatch { repository.enter(partnerId) }
 }
