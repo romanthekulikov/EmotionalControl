@@ -1,5 +1,8 @@
 import java.net.URI
 
+include(":feature:statistic")
+
+
 include(":feature:main")
 
 
