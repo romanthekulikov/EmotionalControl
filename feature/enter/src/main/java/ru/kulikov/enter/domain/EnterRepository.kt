@@ -1,5 +1,7 @@
 package ru.kulikov.enter.domain
 
-internal interface EnterRepository {
-    suspend fun enterRoom(partnerId: Int) : Room
+import com.roman_kulikov.tools.Result
+
+interface EnterRepository {
+    suspend fun enter(partnerId: Int): Result<Boolean>
 }
