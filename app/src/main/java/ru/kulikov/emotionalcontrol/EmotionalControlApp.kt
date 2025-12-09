@@ -3,6 +3,8 @@ package ru.kulikov.emotionalcontrol
 import android.app.Application
 import com.example.main.di.MainComponent
 import com.example.main.ui.MainActivity
+import com.example.profile.di.ProfileComponent
+import com.example.profile.ui.ProfileActivity
 import com.example.splash.di.SplashComponent
 import com.google.firebase.FirebaseApp
 import ru.kulikov.auth.di.AuthComponent
@@ -28,6 +30,7 @@ class EmotionalControlApp : Application() {
         SplashComponent.init(coreComponent)
         MainComponent.init(coreComponent)
         EnterComponent.init(coreComponent)
+        ProfileComponent.init(coreComponent)
     }
 
     private fun setRouter() {
@@ -37,6 +40,7 @@ class EmotionalControlApp : Application() {
                     is Screen.AuthScreen -> screen.fromActivity.startActivity(AuthActivity.createIntent(screen.fromActivity))
                     is Screen.MainScreen -> screen.fromActivity.startActivity(MainActivity.createIntent(screen.fromActivity))
                     is Screen.EnterScreen -> screen.fromActivity.startActivity(EnterActivity.createIntent(screen.fromActivity))
+                    is Screen.ProfileScreen -> screen.fromActivity.startActivity(ProfileActivity.createIntent(screen.fromActivity))
                 }
             }
 

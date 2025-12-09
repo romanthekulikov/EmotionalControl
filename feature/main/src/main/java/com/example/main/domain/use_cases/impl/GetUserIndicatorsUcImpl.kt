@@ -4,7 +4,7 @@ import com.example.main.domain.MainRepository
 import com.example.main.domain.use_cases.GetUserIndicatorsUc
 import com.roman_kulikov.tools.ExceptionCatcher
 import com.roman_kulikov.tools.Result
-import ru.kulikov.core.utils.data.Indicator
+import ru.kulikov.core.utils.data.models.Indicator
 import javax.inject.Inject
 
 class GetUserIndicatorsUcImpl @Inject constructor(

@@ -53,6 +53,8 @@ class MainActivity : AppCompatActivity() {
         }
         addListeners()
         binding.seekPartner.isEnabled = false
+
+        viewModel.loadData()
     }
 
     private fun observeState() {
@@ -60,9 +62,11 @@ class MainActivity : AppCompatActivity() {
             viewModel.state.collectLatest { state ->
                 binding.seekPartner.progress = (state.partnerEmotionalIndicator * 100).toInt()
                 binding.imagePartnerEmoji.setImageResource(state.partnerEmotionalEmoji)
+                binding.textPartnerIndicator.text = state.partnerName
 
                 binding.seekUser.progress = (state.userEmotionalIndicator * 100).toInt()
                 binding.imageUserEmoji.setImageResource(state.userEmotionalEmoji)
+                binding.textUserIndicator.text = state.userName
             }
         }
     }
@@ -73,8 +77,7 @@ class MainActivity : AppCompatActivity() {
                 viewModel.events.collect { event ->
                     when (event) {
                         is UiEvent.ShowToast -> Toast.makeText(this@MainActivity, event.message, Toast.LENGTH_LONG).show()
-                        UiEvent.Navigate -> {
-
+                        UiEvent.Navigate -> { /* Nothing */
                         }
                     }
                 }
@@ -92,6 +95,10 @@ class MainActivity : AppCompatActivity() {
             viewModel.forgotPartnerId()
             router.navigateTo(Screen.EnterScreen(this))
             finish()
+        }
+
+        binding.buttonProfile.setOnClickListener {
+            router.navigateTo(Screen.ProfileScreen(this))
         }
 
         binding.seekUser.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
