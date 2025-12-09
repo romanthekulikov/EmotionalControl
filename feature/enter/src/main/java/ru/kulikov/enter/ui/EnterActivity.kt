@@ -56,6 +56,7 @@ class EnterActivity : AppCompatActivity() {
         lifecycleScope.launch {
             viewModel.state.collectLatest { state ->
                 if (state.partnerId.toString() != binding.inputPartnerId.text.toString()) binding.inputPartnerId.setText(state.partnerId.toString())
+                binding.textYourId.text = "Твой id: ${state.userId}"
             }
         }
     }
@@ -66,7 +67,7 @@ class EnterActivity : AppCompatActivity() {
                 when (event) {
                     is UiEvent.ShowToast -> Toast.makeText(this@EnterActivity, event.message, Toast.LENGTH_LONG).show()
                     UiEvent.Navigate -> {
-                        Toast.makeText(this@EnterActivity, "Welcome!", Toast.LENGTH_LONG).show()
+                        Toast.makeText(this@EnterActivity, "Добро пожаловать!", Toast.LENGTH_LONG).show()
                         router.navigateTo(Screen.MainScreen(this@EnterActivity))
                     }
                 }
@@ -83,10 +84,10 @@ class EnterActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
                 val intNumber = s.toString().toIntOrNull()
                 if (intNumber == null && s.toString().isNotEmpty()) {
-                    binding.inputPartnerId.error = "Only digits available!!"
-                    Toast.makeText(this@EnterActivity, "Only digits available!!", Toast.LENGTH_SHORT).show()
-                } else if (intNumber != null && !s.toString().isNotEmpty()) {
-                    binding.inputPartnerId.error = ""
+                    binding.inputPartnerId.error = "Можно только цифры!!"
+                    Toast.makeText(this@EnterActivity, "Можно только цифры!!", Toast.LENGTH_SHORT).show()
+                } else if (intNumber != null && s.toString().isNotEmpty()) {
+                    binding.inputPartnerId.error = null
                     viewModel.setPartnerId(intNumber)
                 }
             }

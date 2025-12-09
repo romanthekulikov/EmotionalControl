@@ -19,7 +19,7 @@ class EnterExceptionCatcher @Inject constructor() : ExceptionCatcher {
             Result.Failure("Произошла ошибка при загрузке данных")
         } catch (e: IllegalStateException) {
             logException(e)
-            Result.Failure("User not found")
+            Result.Failure("Такой пользователь не найден")
         }
     }
 
@@ -34,7 +34,7 @@ class EnterExceptionCatcher @Inject constructor() : ExceptionCatcher {
             Result.Failure("Произошла ошибка при загрузке данных")
         } catch (e: IllegalStateException) {
             logException(e)
-            Result.Failure("User not found")
+            Result.Failure("Такой пользователь не найден")
         }
     }
 
