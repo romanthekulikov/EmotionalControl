@@ -43,9 +43,9 @@ class AuthViewModel() : AuthStateHandler(), AuthorizeContract, CoroutineScope {
     private suspend fun handleAuthResult(authResult: Result<FirebaseUser?>) {
         when (authResult) {
             is Result.Failure<*> -> _events.emit(UiEvent.ShowToast(authResult.cause))
-            is Result.NoNetwork<*> -> _events.emit(UiEvent.ShowToast("No internet connection"))
+            is Result.NoNetwork<*> -> _events.emit(UiEvent.ShowToast("Нет интернета"))
             is Result.Success<*> -> {
-                _events.emit(UiEvent.ShowToast("Success"))
+                _events.emit(UiEvent.ShowToast("Удачно!"))
                 _events.emit(UiEvent.Navigate)
             }
         }

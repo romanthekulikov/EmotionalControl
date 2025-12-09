@@ -29,7 +29,7 @@ class SplashAppActivity : AppCompatActivity() {
         if (viewModel.needNavigateToMain()) {
             router.navigateTo(Screen.MainScreen(this))
         } else if (viewModel.needNavigateToEnter()) {
-            // TODO: Navigate to enter screen
+            router.navigateTo(Screen.EnterScreen(this))
         } else {
             router.navigateTo(Screen.AuthScreen(this))
         }

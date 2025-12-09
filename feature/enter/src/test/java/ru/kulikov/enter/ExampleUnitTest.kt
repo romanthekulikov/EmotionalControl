@@ -1,4 +1,4 @@
-package com.example.splash
+package ru.kulikov.enter
 
 import org.junit.Test
 

@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
         addEventListener()
         observeState()
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.refresh_layout)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
@@ -86,8 +86,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addListeners() {
+        binding.refreshLayout.setOnRefreshListener {
+            viewModel.loadData()
+            binding.refreshLayout.isRefreshing = false
+        }
+
         binding.buttonBack.setOnClickListener {
             viewModel.forgotPartnerId()
+            router.navigateTo(Screen.EnterScreen(this))
+            finish()
         }
 
         binding.buttonProfile.setOnClickListener {

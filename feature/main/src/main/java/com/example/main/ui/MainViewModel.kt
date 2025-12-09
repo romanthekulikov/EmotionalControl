@@ -43,10 +43,14 @@ class MainViewModel : MainStateHandler(), MainContract {
     @Inject
     lateinit var getPartnerNameUc: GetPartnerNameUc
 
-    private var dataSaved: Boolean = true
-
     private val _events = MutableSharedFlow<UiEvent>()
     val events = _events.asSharedFlow()
+
+    init {
+        MainComponent.getInstance().inject(this)
+        loadData()
+    }
+
     override fun loadData() {
         getUserIndicators()
         getPartnerIndicators()
@@ -54,17 +58,12 @@ class MainViewModel : MainStateHandler(), MainContract {
         getPartnerName()
     }
 
-    init {
-        MainComponent.getInstance().inject(this)
-    }
-
-
     override fun getUserIndicators() {
-        if (dataSaved) viewModelScope.launch { handleGetUserIndicatorResult(getUserIndicatorsUc()) }
+        viewModelScope.launch { handleGetUserIndicatorResult(getUserIndicatorsUc()) }
     }
 
     override fun getPartnerIndicators() {
-        if (dataSaved) viewModelScope.launch { handleGetPartnerIndicatorResult(getPartnerIndicatorsUc()) }
+        viewModelScope.launch { handleGetPartnerIndicatorResult(getPartnerIndicatorsUc()) }
     }
 
     override fun saveUserIndicator() {
@@ -84,19 +83,17 @@ class MainViewModel : MainStateHandler(), MainContract {
     }
 
     override fun setUserEmotionalIndicator(value: Double) {
-        if (dataSaved) dataSaved = false
         _state.update { it.copy(userEmotionalIndicator = value, userEmotionalEmoji = getEmojiUc(value)) }
     }
 
     override fun setPartnerEmotionalIndicator(value: Double) {
-        if (dataSaved) dataSaved = false
         _state.update { it.copy(partnerEmotionalIndicator = value, partnerEmotionalEmoji = getEmojiUc(value)) }
     }
 
     private suspend fun handleGetUserIndicatorResult(result: Result<List<Indicator>>) {
         when (result) {
             is Result.Failure<List<Indicator>> -> _events.emit(UiEvent.ShowToast(result.cause))
-            is Result.NoNetwork<List<Indicator>> -> _events.emit(UiEvent.ShowToast("No network"))
+            is Result.NoNetwork<List<Indicator>> -> _events.emit(UiEvent.ShowToast("Нет интернета"))
             is Result.Success<List<Indicator>> -> {
                 result.data.filterIsInstance<Indicator.EmotionalIndicator>().firstOrNull()?.let {
                     setUserEmotionalIndicator(it.percent)
@@ -108,7 +105,7 @@ class MainViewModel : MainStateHandler(), MainContract {
     private suspend fun handleGetPartnerIndicatorResult(result: Result<List<Indicator>>) {
         when (result) {
             is Result.Failure<List<Indicator>> -> _events.emit(UiEvent.ShowToast(result.cause))
-            is Result.NoNetwork<List<Indicator>> -> _events.emit(UiEvent.ShowToast("No network"))
+            is Result.NoNetwork<List<Indicator>> -> _events.emit(UiEvent.ShowToast("Нет интернета"))
             is Result.Success<List<Indicator>> -> {
                 result.data.filterIsInstance<Indicator.EmotionalIndicator>().firstOrNull()?.let {
                     setPartnerEmotionalIndicator(it.percent)
@@ -122,7 +119,6 @@ class MainViewModel : MainStateHandler(), MainContract {
             is Result.Failure<Boolean> -> _events.emit(UiEvent.ShowToast(result.cause))
             is Result.NoNetwork<Boolean> -> _events.emit(UiEvent.ShowToast("No network"))
             is Result.Success<Boolean> -> {
-                dataSaved = true
                 _events.emit(UiEvent.ShowToast("Success saving"))
             }
         }
