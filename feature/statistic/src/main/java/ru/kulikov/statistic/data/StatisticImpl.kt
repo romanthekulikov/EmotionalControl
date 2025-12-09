@@ -5,11 +5,9 @@ import ru.kulikov.statistic.domain.IndicatorValue
 import ru.kulikov.statistic.domain.Statistic
 import java.time.LocalDate
 
-class StatisticImpl(override val indicatorValues: List<IndicatorValue>) : Statistic{
-}
+data class StatisticImpl(override val indicatorValues: List<IndicatorValue>) : Statistic
 
-class IndicatorValueImpl(
+data class IndicatorValueImpl(
     override val date: LocalDate,
-    override val indicators: List<Indicator>
-) : IndicatorValue {
-}
+    override val indicators: List<Indicator>,
+) : IndicatorValue

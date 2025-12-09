@@ -4,6 +4,6 @@ import com.roman_kulikov.tools.Result
 import java.time.LocalDate
 
 interface StatisticContract {
-    fun partnerStatisticByPeriod(start: LocalDate, end: LocalDate?) : Result<Statistic>
+    fun partnerStatisticByPeriod() : Result<Statistic>
     fun firstRecordDate() : Result<LocalDate>
 }
