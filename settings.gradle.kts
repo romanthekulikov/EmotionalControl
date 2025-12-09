@@ -1,3 +1,11 @@
+import java.net.URI
+
+include(":feature:enter")
+
+
+include(":feature:main")
+
+
 pluginManagement {
     repositories {
         google {
@@ -16,9 +24,16 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+        maven {
+            url = URI("https://jitpack.io")
+        }
     }
 }
 
 rootProject.name = "EmotionalControl"
 include(":app")
- 
+include(":core")
+include(":feature")
+include(":feature:auth")
+include(":feature:splash")
+include(":feature:enter")

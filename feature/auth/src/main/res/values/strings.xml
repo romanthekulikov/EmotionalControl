@@ -1,0 +1,10 @@
+<resources>
+    <string name="hint_email_address">Email</string>
+    <string name="hint_password">Пароль</string>
+    <string name="hint_confirm_password">Повтори пароль</string>
+
+    <string name="text_or_create_account">Или создай аккаунт</string>
+    <string name="text_or_authorize">Или авторизуйся</string>
+    <string name="text_authorize">Авторизация</string>
+    <string name="text_create_account">Создай аккаунт</string>
+</resources>
