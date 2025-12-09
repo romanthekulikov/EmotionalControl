@@ -1,1 +1,4 @@
-<resources></resources>
+<resources>
+    <string name="text_partner_id">Partner id</string>
+    <string name="text_enter">Enter</string>
+</resources>
