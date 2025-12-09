@@ -51,8 +51,11 @@ class MainRepositoryImpl @Inject constructor(private val sharedPreferences: AppS
             .dateReference(getDateNow())
 
         return buildList {
-            dateReference.indicatorReference(EMOTIONAL_INDICATOR_NAME).get().await().getValue<Double>()?.let {
-                add(Indicator.EmotionalIndicator(percent = it))
+            val percent = dateReference.indicatorReference(EMOTIONAL_INDICATOR_NAME).get().await().getValue<Double>()
+            if (percent == null) {
+                add(Indicator.EmotionalIndicator(percent = 1.0))
+            } else {
+                add(Indicator.EmotionalIndicator(percent = percent))
             }
         }
     }

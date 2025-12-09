@@ -11,5 +11,9 @@ class EnterUseCaseImpl @Inject constructor(
     private val exceptionCatcher: ExceptionCatcher,
 ) : EnterUseCase {
     override suspend fun invoke(partnerId: Int): Result<Boolean> =
-        exceptionCatcher.launchWithCatch { repository.enter(partnerId) }
+        exceptionCatcher.launchWithCatch {
+            val userId = repository.getUserId() as Result.Success
+            if (userId.data == partnerId) throw IllegalStateException()
+            repository.enter(partnerId)
+        }
 }

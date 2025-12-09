@@ -50,6 +50,7 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":feature:splash"))
     implementation(project(":feature:auth"))
+    implementation(project(":feature:enter"))
     implementation(project(":feature:main"))
     implementation(project(":feature:enter"))
 }
