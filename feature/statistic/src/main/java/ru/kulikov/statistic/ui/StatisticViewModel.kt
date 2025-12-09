@@ -17,15 +17,12 @@ class StatisticViewModel : StatisticStateHandler(), StatisticContract {
     @Inject
     lateinit var partnerStatisticByPeriodUseCase: PartnerStatisticByPeriodUseCase
 
-    override fun partnerStatisticByPeriod(
-        start: LocalDate,
-        end: LocalDate?
-    ): Result<Statistic> {
-        TODO("Not yet implemented")
-    }
-
     init {
         StatisticComponent.getInstance().inject(this)
+    }
+
+    override fun partnerStatisticByPeriod(): Result<Statistic> {
+        TODO("Not yet implemented")
     }
 
     override fun firstRecordDate(): Result<LocalDate> {
