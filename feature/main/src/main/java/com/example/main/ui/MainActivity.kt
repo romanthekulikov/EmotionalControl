@@ -3,6 +3,7 @@ package com.example.main.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -20,6 +21,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.kulikov.core.utils.base.UiEvent
 import ru.kulikov.core.utils.router.Router
+import ru.kulikov.core.utils.router.Screen
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -45,15 +47,14 @@ class MainActivity : AppCompatActivity() {
         addEventListener()
         observeState()
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.refresh_layout)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
         addListeners()
         binding.seekPartner.isEnabled = false
-
-        loadData()
+        viewModel.loadData()
     }
 
     private fun observeState() {
@@ -61,27 +62,31 @@ class MainActivity : AppCompatActivity() {
             viewModel.state.collectLatest { state ->
                 binding.seekPartner.progress = (state.partnerEmotionalIndicator * 100).toInt()
                 binding.imagePartnerEmoji.setImageResource(state.partnerEmotionalEmoji)
+                binding.textPartnerIndicator.text = state.partnerName
 
                 binding.seekUser.progress = (state.userEmotionalIndicator * 100).toInt()
                 binding.imageUserEmoji.setImageResource(state.userEmotionalEmoji)
+                binding.textUserIndicator.text = state.userName
             }
         }
     }
 
-    private fun loadData() {
-        viewModel.getPartnerIndicators()
-        viewModel.getUserIndicators()
-    }
-
     private fun addEventListener() {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.events.collect { event ->
-                    when (event) {
-                        is UiEvent.ShowToast -> Toast.makeText(this@MainActivity, event.message, Toast.LENGTH_LONG).show()
-                        UiEvent.Navigate -> {
+            viewModel.events.collect { event ->
+                when (event) {
+                    is UiEvent.ShowToast -> Toast.makeText(this@MainActivity, event.message, Toast.LENGTH_LONG).show()
+                    UiEvent.Navigate -> { /* Nothing */
+                    }
 
-                        }
+                    UiEvent.InProgress -> {
+                        binding.layoutProgressbar.visibility = View.VISIBLE
+                        binding.progressbar.isActivated = true
+                    }
+
+                    UiEvent.OutProgress -> {
+                        binding.layoutProgressbar.visibility = View.GONE
+                        binding.progressbar.isActivated = false
                     }
                 }
             }
@@ -89,8 +94,19 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun addListeners() {
+        binding.refreshLayout.setOnRefreshListener {
+            viewModel.loadData()
+            binding.refreshLayout.isRefreshing = false
+        }
+
         binding.buttonBack.setOnClickListener {
             viewModel.forgotPartnerId()
+            router.navigateTo(Screen.EnterScreen(this))
+            finish()
+        }
+
+        binding.buttonProfile.setOnClickListener {
+            router.navigateTo(Screen.ProfileScreen(this))
         }
 
         binding.seekUser.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -121,6 +137,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.buttonSave.setOnClickListener {
             viewModel.saveUserIndicator()
+        }
+
+        binding.buttonStatistic.setOnClickListener {
+            router.navigateTo(Screen.StatisticScreen(this))
         }
     }
 

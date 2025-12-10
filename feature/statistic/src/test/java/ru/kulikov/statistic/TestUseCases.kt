@@ -7,15 +7,10 @@ import io.mockk.mockk
 import kotlinx.coroutines.runBlocking
 import org.junit.Test
 import ru.kulikov.core.utils.data.Indicator
-import ru.kulikov.core.utils.domain.AppSharedPreferences
 import ru.kulikov.statistic.data.IndicatorValueImpl
 import ru.kulikov.statistic.data.StatisticExceptionCatcher
 import ru.kulikov.statistic.data.StatisticImpl
-import ru.kulikov.statistic.data.StatisticRepositoryImpl
 import ru.kulikov.statistic.domain.StatisticRepository
-import ru.kulikov.statistic.domain.use_cases.PartnerStatisticByPeriodUseCase
-import ru.kulikov.statistic.domain.use_cases.impl.FirstRecordDateUseCaseImpl
-import ru.kulikov.statistic.domain.use_cases.impl.PartnerStatisticByPeriodUseCaseImpl
 import java.time.LocalDate
 
 class TestUseCases {

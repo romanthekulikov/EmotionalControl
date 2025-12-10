@@ -1,5 +1,11 @@
 import java.net.URI
 
+include(":feature:profile")
+
+
+include(":feature:enter")
+
+
 include(":feature:statistic")
 
 
@@ -36,3 +42,4 @@ include(":core")
 include(":feature")
 include(":feature:auth")
 include(":feature:splash")
+include(":feature:enter")

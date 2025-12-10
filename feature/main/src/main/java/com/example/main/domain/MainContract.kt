@@ -1,8 +1,7 @@
 package com.example.main.domain
 
 internal interface MainContract {
-    fun getUserIndicators()
-    fun getPartnerIndicators()
+    fun loadData()
     fun saveUserIndicator()
     fun forgotPartnerId()
 }

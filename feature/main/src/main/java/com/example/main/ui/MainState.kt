@@ -11,6 +11,10 @@ data class MainState(
     val userEmotionalIndicator: Double = 1.0,
     @StateField(FunctionTarget.SET)
     val partnerEmotionalIndicator: Double = 1.0,
+    @StateField(FunctionTarget.SET)
+    val userName: String = "",
+    @StateField(FunctionTarget.SET)
+    val partnerName: String = "",
     val userEmotionalEmoji: Int = R.drawable.ic_max_emotional,
     val partnerEmotionalEmoji: Int = R.drawable.ic_max_emotional,
 )

@@ -1,6 +1,6 @@
 package ru.kulikov.statistic.domain
 
-import ru.kulikov.core.utils.data.Indicator
+import ru.kulikov.core.utils.data.models.Indicator
 import java.time.LocalDate
 
 interface Statistic {

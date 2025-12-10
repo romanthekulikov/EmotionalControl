@@ -5,6 +5,8 @@ import com.google.firebase.FirebaseNetworkException
 import com.google.firebase.database.DatabaseException
 import com.roman_kulikov.tools.ExceptionCatcher
 import com.roman_kulikov.tools.Result
+import kotlinx.coroutines.TimeoutCancellationException
+import kotlinx.coroutines.withTimeout
 import javax.inject.Inject
 
 class MainExceptionCatcher @Inject constructor() : ExceptionCatcher {
