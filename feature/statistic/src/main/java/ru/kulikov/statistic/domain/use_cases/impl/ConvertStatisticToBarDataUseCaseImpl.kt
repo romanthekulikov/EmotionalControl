@@ -61,17 +61,36 @@ class ConvertStatisticToBarDataUseCaseImpl @Inject constructor() : ConvertStatis
     }
 
     private fun buildMonthEntries(values: List<IndicatorValue>): List<BarEntry> {
-        val grouped = values.groupBy { it.date.get(WeekFields.of(Locale.getDefault()).weekOfMonth()) }
+        if (values.isEmpty()) return emptyList()
+
+        val anyDate = values.first().date
+        val year = anyDate.year
+        val month = anyDate.month
+
+        val weekField = WeekFields.ISO.weekOfMonth()
+
+        val firstDay = LocalDate.of(year, month, 1)
+        val lastDay = firstDay.withDayOfMonth(firstDay.lengthOfMonth())
+
+        val minWeek = firstDay.get(weekField)
+        val maxWeek = lastDay.get(weekField)
+
+        val weekRange = minWeek..maxWeek
+
+        val grouped = values.groupBy { it.date.get(weekField) }
 
         val entries = mutableListOf<BarEntry>()
 
-        for ((week, list) in grouped.toSortedMap()) {
-            val avg = list.flatMap { it.indicators }
+        for (week in weekRange) {
+            val list = grouped[week].orEmpty()
+
+            val avg = list
+                .flatMap { it.indicators }
                 .map { it.percent }
                 .average()
                 .takeIf { !it.isNaN() } ?: 0.0
 
-            entries += BarEntry((week - 1).toFloat(), avg.toFloat())
+            entries += BarEntry((week - minWeek).toFloat(), avg.toFloat())
         }
 
         return entries
