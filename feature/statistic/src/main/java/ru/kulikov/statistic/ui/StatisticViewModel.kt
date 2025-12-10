@@ -48,13 +48,14 @@ class StatisticViewModel : StatisticStateHandler(), StatisticContract {
         loadData()
     }
 
-    override fun loadData() {
+    override fun loadData(onDataLoad: () -> Unit) {
         viewModelScope.launch {
             _events.emit(UiEvent.InProgress)
             val period = getPeriodUseCase(referenceLocalDate, _state.value.mode)
             handleGetStatisticResult(getStatisticByPeriodUseCase(period.first, period.second))?.let {
                 val data = convertStatisticToBarDataUseCase(it, _state.value.mode)
                 setStatisticEntries(data)
+                onDataLoad()
             }
             _events.emit(UiEvent.OutProgress)
         }
@@ -63,8 +64,9 @@ class StatisticViewModel : StatisticStateHandler(), StatisticContract {
 
     override fun moveForward() {
         referenceLocalDate = getNextReferenceDateUseCase(referenceLocalDate, _state.value.mode)
-        currentPage++
-        loadData()
+        loadData {
+            currentPage++
+        }
     }
 
     override fun moveBack() {
@@ -74,8 +76,9 @@ class StatisticViewModel : StatisticStateHandler(), StatisticContract {
         }
 
         referenceLocalDate = getPreviousReferenceDayUseCase(referenceLocalDate, _state.value.mode)
-        currentPage--
-        loadData()
+        loadData {
+            currentPage--
+        }
     }
 
     override fun changeMode(periodMode: PeriodMode) {

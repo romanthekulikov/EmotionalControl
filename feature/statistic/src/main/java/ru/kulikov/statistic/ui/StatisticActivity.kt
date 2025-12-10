@@ -55,8 +55,6 @@ class StatisticActivity : AppCompatActivity() {
         addEventListener()
         observeState()
         addListeners()
-
-        viewModel.loadData()
     }
 
     private fun addEventListener() {

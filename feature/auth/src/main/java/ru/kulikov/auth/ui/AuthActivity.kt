@@ -22,7 +22,7 @@ import ru.kulikov.auth.di.AuthComponent
 import ru.kulikov.core.utils.base.BaseActivity
 import ru.kulikov.core.utils.base.UiEvent
 import ru.kulikov.core.utils.router.Router
-import ru.kulikov.core.utils.router.Screen.MainScreen
+import ru.kulikov.core.utils.router.Screen
 import javax.inject.Inject
 
 class AuthActivity : BaseActivity() {
@@ -58,6 +58,7 @@ class AuthActivity : BaseActivity() {
 
                         UiEvent.OutProgress -> {
                         }
+
                         UiEvent.Navigate -> router.navigateTo(Screen.EnterScreen(this@AuthActivity))
                     }
                 }

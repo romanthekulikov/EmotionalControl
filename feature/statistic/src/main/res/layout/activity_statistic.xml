@@ -27,26 +27,26 @@
         app:layout_constraintTop_toBottomOf="@+id/button_back" />
 
     <ImageView
-        android:id="@+id/image_next_button"
+        android:id="@+id/image_previous_button"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:rotation="180"
         android:src="@drawable/ic_arrow_enabled"
         app:layout_constraintBottom_toTopOf="@+id/tab_layout_period"
-        app:layout_constraintEnd_toStartOf="@+id/image_previous_button"
+        app:layout_constraintEnd_toStartOf="@+id/image_next_button"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline_bottom" />
 
     <ImageView
-        android:id="@+id/image_previous_button"
+        android:id="@+id/image_next_button"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:src="@drawable/ic_arrow_enabled"
         app:layout_constraintBottom_toTopOf="@+id/tab_layout_period"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/image_next_button"
+        app:layout_constraintStart_toEndOf="@+id/image_previous_button"
         app:layout_constraintTop_toBottomOf="@+id/bar_chart_histogram" />
 
     <androidx.constraintlayout.widget.Guideline

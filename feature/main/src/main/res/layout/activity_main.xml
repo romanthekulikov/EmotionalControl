@@ -114,31 +114,33 @@
 
 
             </LinearLayout>
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/button_save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
-            android:background="@color/button"
-            android:padding="12dp"
-            android:text="Save indicator"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button_statistic"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_user_seek" />
 
-        <ImageView
-            android:id="@+id/button_statistic"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
-            android:src="@drawable/ic_statistics"
-            app:layout_constraintBottom_toBottomOf="@+id/button_save"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button_save"
-            app:layout_constraintTop_toTopOf="@+id/button_save" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:background="@color/button"
+                android:padding="12dp"
+                android:text="Save indicator"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/button_statistic"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/layout_user_seek" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/button_statistic"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:src="@drawable/ic_statistics"
+                app:layout_constraintBottom_toBottomOf="@+id/button_save"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/button_save"
+                app:layout_constraintTop_toTopOf="@+id/button_save" />
 
-</ScrollView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

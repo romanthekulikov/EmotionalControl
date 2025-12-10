@@ -59,6 +59,12 @@ class ProfileActivity : AppCompatActivity() {
                     is UiEvent.ShowToast -> Toast.makeText(this@ProfileActivity, event.message, Toast.LENGTH_LONG).show()
                     UiEvent.Navigate -> { /* Nothing */
                     }
+
+                    UiEvent.InProgress -> {
+                    }
+
+                    UiEvent.OutProgress -> {
+                    }
                 }
             }
         }

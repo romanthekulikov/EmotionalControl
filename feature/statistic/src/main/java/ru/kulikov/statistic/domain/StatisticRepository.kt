@@ -4,6 +4,5 @@ import com.roman_kulikov.tools.Result
 import java.time.LocalDate
 
 interface StatisticRepository {
-    suspend fun partnerStatisticByPeriod(start: LocalDate, end: LocalDate?) : Result<Statistic>
-    suspend fun firstRecordDate() : Result<LocalDate>
+    suspend fun partnerStatisticByPeriod(start: LocalDate, end: LocalDate?): Result<Statistic>
 }

@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.kulikov.core.utils.base.UiEvent
 import ru.kulikov.core.utils.router.Router
-import ru.kulikov.core.utils.router.Screen
+import ru.kulikov.core.utils.router.Screen.MainScreen
 import ru.kulikov.enter.R
 import ru.kulikov.enter.databinding.ActivityEnterBinding
 import ru.kulikov.enter.di.EnterComponent
@@ -68,7 +68,13 @@ class EnterActivity : AppCompatActivity() {
                     is UiEvent.ShowToast -> Toast.makeText(this@EnterActivity, event.message, Toast.LENGTH_LONG).show()
                     UiEvent.Navigate -> {
                         Toast.makeText(this@EnterActivity, "Добро пожаловать!", Toast.LENGTH_LONG).show()
-                        router.navigateTo(Screen.MainScreen(this@EnterActivity))
+                        router.navigateTo(MainScreen(this@EnterActivity))
+                    }
+
+                    UiEvent.InProgress -> {
+                    }
+
+                    UiEvent.OutProgress -> {
                     }
                 }
             }
