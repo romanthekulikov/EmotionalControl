@@ -1,5 +1,6 @@
 package com.example.main.ui
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -19,6 +20,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import ru.kulikov.core.utils.base.UiEvent
 import ru.kulikov.core.utils.data.models.Indicator
+import ru.kulikov.core.utils.launchWithTimeout
 import javax.inject.Inject
 
 class MainViewModel : MainStateHandler(), MainContract {
@@ -48,38 +50,29 @@ class MainViewModel : MainStateHandler(), MainContract {
 
     init {
         MainComponent.getInstance().inject(this)
-        loadData()
     }
 
     override fun loadData() {
-        getUserIndicators()
-        getPartnerIndicators()
-        getUserName()
-        getPartnerName()
-    }
-
-    override fun getUserIndicators() {
-        viewModelScope.launch { handleGetUserIndicatorResult(getUserIndicatorsUc()) }
-    }
-
-    override fun getPartnerIndicators() {
-        viewModelScope.launch { handleGetPartnerIndicatorResult(getPartnerIndicatorsUc()) }
+        viewModelScope.launch {
+            withTimeoutProgress {
+                getUserIndicators()
+                getPartnerIndicators()
+                getUserName()
+                getPartnerName()
+            }
+        }
     }
 
     override fun saveUserIndicator() {
-        viewModelScope.launch { handleSaveIndicatorResult(saveIndicatorUc(Indicator.EmotionalIndicator(percent = _state.value.userEmotionalIndicator))) }
+        viewModelScope.launch {
+            withTimeoutProgress {
+                handleSaveIndicatorResult(saveIndicatorUc(Indicator.EmotionalIndicator(percent = _state.value.userEmotionalIndicator)))
+            }
+        }
     }
 
     override fun forgotPartnerId() {
         forgotPartnerId.invoke()
-    }
-
-    override fun getUserName() {
-        viewModelScope.launch { handleGetUserNameResult(getUserNameUc()) }
-    }
-
-    override fun getPartnerName() {
-        viewModelScope.launch { handleGetPartnerNameResult(getPartnerNameUc()) }
     }
 
     override fun setUserEmotionalIndicator(value: Double) {
@@ -88,6 +81,22 @@ class MainViewModel : MainStateHandler(), MainContract {
 
     override fun setPartnerEmotionalIndicator(value: Double) {
         _state.update { it.copy(partnerEmotionalIndicator = value, partnerEmotionalEmoji = getEmojiUc(value)) }
+    }
+
+    private suspend fun getUserName() {
+        handleGetUserNameResult(getUserNameUc())
+    }
+
+    private suspend fun getPartnerName() {
+        handleGetPartnerNameResult(getPartnerNameUc())
+    }
+
+    private suspend fun getUserIndicators() {
+        handleGetUserIndicatorResult(getUserIndicatorsUc())
+    }
+
+    private suspend fun getPartnerIndicators() {
+        handleGetPartnerIndicatorResult(getPartnerIndicatorsUc())
     }
 
     private suspend fun handleGetUserIndicatorResult(result: Result<List<Indicator>>) {
@@ -149,5 +158,18 @@ class MainViewModel : MainStateHandler(), MainContract {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
             return MainViewModel() as T
         }
+    }
+
+    private suspend fun withTimeoutProgress(job: suspend () -> Unit) {
+        _events.emit(UiEvent.InProgress)
+        launchWithTimeout(onTimeout) {
+            job()
+        }
+        _events.emit(UiEvent.OutProgress)
+    }
+
+    private val onTimeout: suspend (Throwable) -> Unit = {
+        Log.e("${this@MainViewModel::class.simpleName}: ", it.stackTraceToString())
+        _events.emit(UiEvent.ShowToast("Internet connection unstable"))
     }
 }
