@@ -53,10 +53,13 @@ class AuthActivity : BaseActivity() {
                     when (event) {
                         is UiEvent.ShowToast -> Toast.makeText(this@AuthActivity, event.message, Toast.LENGTH_LONG).show()
                         UiEvent.InProgress -> {
-
+                            binding.layoutProgressbar.visibility = View.VISIBLE
+                            binding.progressbar.isActivated = true
                         }
 
                         UiEvent.OutProgress -> {
+                            binding.layoutProgressbar.visibility = View.GONE
+                            binding.progressbar.isActivated = false
                         }
 
                         UiEvent.Navigate -> router.navigateTo(Screen.EnterScreen(this@AuthActivity))

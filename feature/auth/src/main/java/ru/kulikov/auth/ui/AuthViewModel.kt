@@ -1,11 +1,11 @@
 package ru.kulikov.auth.ui
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
 import com.roman_kulikov.tools.Result
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
@@ -14,11 +14,10 @@ import ru.kulikov.auth.domain.AuthorizeContract
 import ru.kulikov.auth.domain.use_cases.AuthUseCase
 import ru.kulikov.auth.domain.use_cases.CreateAccountUseCase
 import ru.kulikov.core.utils.base.UiEvent
+import ru.kulikov.core.utils.launchWithTimeout
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
-class AuthViewModel() : AuthStateHandler(), AuthorizeContract, CoroutineScope {
-    override val coroutineContext: CoroutineContext = Dispatchers.IO
+class AuthViewModel() : AuthStateHandler(), AuthorizeContract {
     private val _events = MutableSharedFlow<UiEvent>()
     val events = _events.asSharedFlow()
 
@@ -33,11 +32,19 @@ class AuthViewModel() : AuthStateHandler(), AuthorizeContract, CoroutineScope {
     }
 
     override fun auth() {
-        launch { handleAuthResult(authUseCase(_state.value.email, _state.value.pass)) }
+        viewModelScope.launch {
+            withTimeoutProgress {
+                handleAuthResult(authUseCase(_state.value.email, _state.value.pass))
+            }
+        }
     }
 
     override fun createAccount() {
-        launch { handleAuthResult(createAccountUseCase(_state.value.email, _state.value.pass, _state.value.confirmPass)) }
+        viewModelScope.launch {
+            withTimeoutProgress {
+                handleAuthResult(createAccountUseCase(_state.value.email, _state.value.pass, _state.value.confirmPass))
+            }
+        }
     }
 
     private suspend fun handleAuthResult(authResult: Result<FirebaseUser?>) {
@@ -49,6 +56,19 @@ class AuthViewModel() : AuthStateHandler(), AuthorizeContract, CoroutineScope {
                 _events.emit(UiEvent.Navigate)
             }
         }
+    }
+
+    private suspend fun withTimeoutProgress(job: suspend () -> Unit) {
+        _events.emit(UiEvent.InProgress)
+        launchWithTimeout(onTimeout) {
+            job()
+        }
+        _events.emit(UiEvent.OutProgress)
+    }
+
+    private val onTimeout: suspend (Throwable) -> Unit = {
+        Log.e("${this@AuthViewModel::class.simpleName}: ", it.stackTraceToString())
+        _events.emit(UiEvent.ShowToast("Internet connection unstable"))
     }
 
     class Factory() : ViewModelProvider.Factory {
