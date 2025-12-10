@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
@@ -16,6 +17,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.kulikov.core.utils.base.UiEvent
 import ru.kulikov.core.utils.router.Router
+import ru.kulikov.core.utils.router.Screen
 import ru.kulikov.core.utils.router.Screen.MainScreen
 import ru.kulikov.enter.R
 import ru.kulikov.enter.databinding.ActivityEnterBinding
@@ -72,9 +74,13 @@ class EnterActivity : AppCompatActivity() {
                     }
 
                     UiEvent.InProgress -> {
+                        binding.layoutProgressbar.visibility = View.VISIBLE
+                        binding.progressbar.isActivated = true
                     }
 
                     UiEvent.OutProgress -> {
+                        binding.layoutProgressbar.visibility = View.GONE
+                        binding.progressbar.isActivated = false
                     }
                 }
             }
@@ -83,6 +89,8 @@ class EnterActivity : AppCompatActivity() {
 
     private fun addListeners() {
         binding.buttonBack.setOnClickListener {
+            viewModel.forgotUser()
+            router.navigateTo(Screen.AuthScreen(this))
             finish()
         }
 
