@@ -3,6 +3,7 @@ package com.example.main.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -53,7 +54,6 @@ class MainActivity : AppCompatActivity() {
         }
         addListeners()
         binding.seekPartner.isEnabled = false
-
         viewModel.loadData()
     }
 
@@ -73,12 +73,20 @@ class MainActivity : AppCompatActivity() {
 
     private fun addEventListener() {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.events.collect { event ->
-                    when (event) {
-                        is UiEvent.ShowToast -> Toast.makeText(this@MainActivity, event.message, Toast.LENGTH_LONG).show()
-                        UiEvent.Navigate -> { /* Nothing */
-                        }
+            viewModel.events.collect { event ->
+                when (event) {
+                    is UiEvent.ShowToast -> Toast.makeText(this@MainActivity, event.message, Toast.LENGTH_LONG).show()
+                    UiEvent.Navigate -> { /* Nothing */
+                    }
+
+                    UiEvent.InProgress -> {
+                        binding.layoutProgressbar.visibility = View.VISIBLE
+                        binding.progressbar.isActivated = true
+                    }
+
+                    UiEvent.OutProgress -> {
+                        binding.layoutProgressbar.visibility = View.GONE
+                        binding.progressbar.isActivated = false
                     }
                 }
             }
@@ -129,6 +137,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.buttonSave.setOnClickListener {
             viewModel.saveUserIndicator()
+        }
+
+        binding.buttonStatistic.setOnClickListener {
+            router.navigateTo(Screen.StatisticScreen(this))
         }
     }
 

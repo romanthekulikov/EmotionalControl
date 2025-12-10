@@ -8,4 +8,5 @@ sealed class Screen {
     data class MainScreen(val fromActivity: Activity) : Screen()
     data class ProfileScreen(val fromActivity: Activity) : Screen()
     data class EnterScreen(val fromActivity: Activity) : Screen()
+    data class StatisticScreen(val fromActivity: Activity) : Screen()
 }

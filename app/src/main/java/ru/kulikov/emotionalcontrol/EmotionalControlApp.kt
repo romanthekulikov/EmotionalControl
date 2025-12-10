@@ -13,8 +13,10 @@ import ru.kulikov.core.utils.di.CoreComponent
 import ru.kulikov.core.utils.router.Router
 import ru.kulikov.core.utils.router.RouterHolder
 import ru.kulikov.core.utils.router.Screen
+import ru.kulikov.statistic.ui.StatisticActivity
 import ru.kulikov.enter.di.EnterComponent
 import ru.kulikov.enter.ui.EnterActivity
+import ru.kulikov.statistic.di.StatisticComponent
 
 class EmotionalControlApp : Application() {
     override fun onCreate() {
@@ -31,6 +33,7 @@ class EmotionalControlApp : Application() {
         MainComponent.init(coreComponent)
         EnterComponent.init(coreComponent)
         ProfileComponent.init(coreComponent)
+        StatisticComponent.init(coreComponent)
     }
 
     private fun setRouter() {
@@ -39,6 +42,7 @@ class EmotionalControlApp : Application() {
                 when (screen) {
                     is Screen.AuthScreen -> screen.fromActivity.startActivity(AuthActivity.createIntent(screen.fromActivity))
                     is Screen.MainScreen -> screen.fromActivity.startActivity(MainActivity.createIntent(screen.fromActivity))
+                    is Screen.StatisticScreen -> screen.fromActivity.startActivity(StatisticActivity.createIntent(screen.fromActivity))
                     is Screen.EnterScreen -> screen.fromActivity.startActivity(EnterActivity.createIntent(screen.fromActivity))
                     is Screen.ProfileScreen -> screen.fromActivity.startActivity(ProfileActivity.createIntent(screen.fromActivity))
                 }

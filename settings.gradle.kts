@@ -6,6 +6,9 @@ include(":feature:profile")
 include(":feature:enter")
 
 
+include(":feature:statistic")
+
+
 include(":feature:main")
 
 

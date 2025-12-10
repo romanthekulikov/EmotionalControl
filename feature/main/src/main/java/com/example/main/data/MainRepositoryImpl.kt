@@ -30,7 +30,7 @@ class MainRepositoryImpl @Inject constructor(private val sharedPreferences: AppS
             .userReference(userFirebaseId)
             .indicatorsDataReference()
             .dateReference(getDateNow())
-            .indicatorReference(indicator.name).setValue(indicator.percent)
+            .indicatorReference(indicator.name).setValue(indicator.percent).await()
 
         return Result.Success(true)
     }
