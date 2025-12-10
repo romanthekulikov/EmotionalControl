@@ -1,0 +1,5 @@
+<resources>
+    <string name="text_partner_id">Id партнера</string>
+    <string name="text_enter">Вход</string>
+    <string name="text_hint_your_id">Твой id:</string>
+</resources>

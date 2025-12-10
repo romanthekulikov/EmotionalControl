@@ -25,12 +25,14 @@ class SplashAppActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_splash_app)
-        if (viewModel.needNavigateToEnter()) {
-            // TODO: Navigate to enter screen
-        } else if (viewModel.needNavigateToMain()) {
+
+        if (viewModel.needNavigateToMain()) {
             router.navigateTo(Screen.MainScreen(this))
+        } else if (viewModel.needNavigateToEnter()) {
+            router.navigateTo(Screen.EnterScreen(this))
         } else {
             router.navigateTo(Screen.AuthScreen(this))
         }
+        finish()
     }
 }

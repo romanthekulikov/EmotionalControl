@@ -1,0 +1,5 @@
+<resources>
+    <string name="text_hint_user_id">user_id</string>
+    <string name="button_save">Save</string>
+    <string name="text_your_name">Your name</string>
+</resources>

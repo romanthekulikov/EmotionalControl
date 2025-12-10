@@ -52,13 +52,13 @@ class AuthActivity : BaseActivity() {
                 viewModel.events.collect { event ->
                     when (event) {
                         is UiEvent.ShowToast -> Toast.makeText(this@AuthActivity, event.message, Toast.LENGTH_LONG).show()
-                        UiEvent.Navigate -> router.navigateTo(MainScreen(this@AuthActivity)) // TODO: Заменить на Enter
                         UiEvent.InProgress -> {
 
                         }
 
                         UiEvent.OutProgress -> {
                         }
+                        UiEvent.Navigate -> router.navigateTo(Screen.EnterScreen(this@AuthActivity))
                     }
                 }
             }
