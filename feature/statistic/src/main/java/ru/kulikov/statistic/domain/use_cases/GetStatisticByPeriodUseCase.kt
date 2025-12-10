@@ -4,6 +4,6 @@ import com.roman_kulikov.tools.Result
 import ru.kulikov.statistic.domain.Statistic
 import java.time.LocalDate
 
-interface PartnerStatisticByPeriodUseCase {
-    suspend operator fun invoke(start: LocalDate, end: LocalDate?) : Result<Statistic>
+interface GetStatisticByPeriodUseCase {
+    suspend operator fun invoke(startPeriod: LocalDate, endPeriod: LocalDate): Result<Statistic>
 }

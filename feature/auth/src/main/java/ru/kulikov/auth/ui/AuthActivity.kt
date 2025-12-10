@@ -22,7 +22,7 @@ import ru.kulikov.auth.di.AuthComponent
 import ru.kulikov.core.utils.base.BaseActivity
 import ru.kulikov.core.utils.base.UiEvent
 import ru.kulikov.core.utils.router.Router
-import ru.kulikov.core.utils.router.Screen
+import ru.kulikov.core.utils.router.Screen.MainScreen
 import javax.inject.Inject
 
 class AuthActivity : BaseActivity() {
@@ -52,7 +52,13 @@ class AuthActivity : BaseActivity() {
                 viewModel.events.collect { event ->
                     when (event) {
                         is UiEvent.ShowToast -> Toast.makeText(this@AuthActivity, event.message, Toast.LENGTH_LONG).show()
-                        UiEvent.Navigate -> router.navigateTo(Screen.MainScreen(this@AuthActivity)) // TODO: Заменить на Enter
+                        UiEvent.Navigate -> router.navigateTo(MainScreen(this@AuthActivity)) // TODO: Заменить на Enter
+                        UiEvent.InProgress -> {
+
+                        }
+
+                        UiEvent.OutProgress -> {
+                        }
                     }
                 }
             }

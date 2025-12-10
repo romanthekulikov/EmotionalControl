@@ -1,1 +1,5 @@
-<resources></resources>
+<resources>
+    <string name="week">Week</string>
+    <string name="month">Month</string>
+    <string name="year">Year</string>
+</resources>

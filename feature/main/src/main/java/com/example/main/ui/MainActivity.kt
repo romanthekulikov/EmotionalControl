@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import ru.kulikov.core.utils.base.UiEvent
 import ru.kulikov.core.utils.router.Router
+import ru.kulikov.core.utils.router.Screen
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
@@ -82,6 +83,14 @@ class MainActivity : AppCompatActivity() {
                         UiEvent.Navigate -> {
 
                         }
+
+                        UiEvent.InProgress -> {
+
+                        }
+
+                        UiEvent.OutProgress -> {
+
+                        }
                     }
                 }
             }
@@ -121,6 +130,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.buttonSave.setOnClickListener {
             viewModel.saveUserIndicator()
+        }
+
+        binding.buttonStatistic.setOnClickListener {
+            router.navigateTo(Screen.StatisticScreen(this))
         }
     }
 

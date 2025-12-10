@@ -1,9 +1,10 @@
 package ru.kulikov.statistic.domain
 
-import com.roman_kulikov.tools.Result
-import java.time.LocalDate
+import ru.kulikov.statistic.data.PeriodMode
 
 interface StatisticContract {
-    fun partnerStatisticByPeriod() : Result<Statistic>
-    fun firstRecordDate() : Result<LocalDate>
+    fun loadData()
+    fun moveForward()
+    fun moveBack()
+    fun changeMode(periodMode: PeriodMode)
 }

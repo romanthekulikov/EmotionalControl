@@ -11,6 +11,7 @@ import ru.kulikov.core.utils.di.CoreComponent
 import ru.kulikov.core.utils.router.Router
 import ru.kulikov.core.utils.router.RouterHolder
 import ru.kulikov.core.utils.router.Screen
+import ru.kulikov.statistic.ui.StatisticActivity
 
 class EmotionalControlApp : Application() {
     override fun onCreate() {
@@ -33,6 +34,7 @@ class EmotionalControlApp : Application() {
                 when (screen) {
                     is Screen.AuthScreen -> screen.fromActivity.startActivity(AuthActivity.createIntent(screen.fromActivity))
                     is Screen.MainScreen -> screen.fromActivity.startActivity(MainActivity.createIntent(screen.fromActivity))
+                    is Screen.StatisticScreen -> screen.fromActivity.startActivity(StatisticActivity.createIntent(screen.fromActivity))
                 }
             }
 

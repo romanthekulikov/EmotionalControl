@@ -6,10 +6,16 @@ import dagger.Module
 import ru.kulikov.statistic.data.StatisticExceptionCatcher
 import ru.kulikov.statistic.data.StatisticRepositoryImpl
 import ru.kulikov.statistic.domain.StatisticRepository
-import ru.kulikov.statistic.domain.use_cases.FirstRecordDateUseCase
-import ru.kulikov.statistic.domain.use_cases.PartnerStatisticByPeriodUseCase
-import ru.kulikov.statistic.domain.use_cases.impl.FirstRecordDateUseCaseImpl
-import ru.kulikov.statistic.domain.use_cases.impl.PartnerStatisticByPeriodUseCaseImpl
+import ru.kulikov.statistic.domain.use_cases.ConvertStatisticToBarDataUseCase
+import ru.kulikov.statistic.domain.use_cases.GetNextReferenceDateUseCase
+import ru.kulikov.statistic.domain.use_cases.GetPeriodUseCase
+import ru.kulikov.statistic.domain.use_cases.GetPreviousReferenceDayUseCase
+import ru.kulikov.statistic.domain.use_cases.GetStatisticByPeriodUseCase
+import ru.kulikov.statistic.domain.use_cases.impl.ConvertStatisticToBarDataUseCaseImpl
+import ru.kulikov.statistic.domain.use_cases.impl.GetNextReferenceDateUseCaseImpl
+import ru.kulikov.statistic.domain.use_cases.impl.GetPeriodUseCaseImpl
+import ru.kulikov.statistic.domain.use_cases.impl.GetPreviousReferenceDayUseCaseImpl
+import ru.kulikov.statistic.domain.use_cases.impl.GetStatisticByPeriodUseCaseImpl
 import javax.inject.Singleton
 
 @Module
@@ -24,9 +30,21 @@ interface StatisticModule {
 
     @Singleton
     @Binds
-    fun bindFirstRecordDateUseCase(firstRecordDateUseCaseImpl: FirstRecordDateUseCaseImpl): FirstRecordDateUseCase
+    fun bindGetPeriodUseCase(getPeriodUseCase: GetPeriodUseCaseImpl): GetPeriodUseCase
 
     @Singleton
     @Binds
-    fun bindPartnerStatisticByPeriodUseCase(partnerStatisticByPeriodUseCaseImpl: PartnerStatisticByPeriodUseCaseImpl): PartnerStatisticByPeriodUseCase
+    fun bindGetStatisticByPeriodUseCase(getStatisticByPeriodUseCase: GetStatisticByPeriodUseCaseImpl): GetStatisticByPeriodUseCase
+
+    @Singleton
+    @Binds
+    fun bindConvertStatisticToBarDataUseCase(convertStatisticToBarDataUseCase: ConvertStatisticToBarDataUseCaseImpl): ConvertStatisticToBarDataUseCase
+
+    @Singleton
+    @Binds
+    fun bindGetNextReferenceDateUseCase(getNextReferenceDateUseCase: GetNextReferenceDateUseCaseImpl): GetNextReferenceDateUseCase
+
+    @Singleton
+    @Binds
+    fun bindGetPreviousReferenceDayUseCase(getPreviousReferenceDayUseCase: GetPreviousReferenceDayUseCaseImpl): GetPreviousReferenceDayUseCase
 }
