@@ -3,6 +3,7 @@ package com.example.main.ui
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -53,6 +54,7 @@ class MainActivity : AppCompatActivity() {
         }
         addListeners()
         binding.seekPartner.isEnabled = false
+        viewModel.loadData()
     }
 
     private fun observeState() {
@@ -60,22 +62,31 @@ class MainActivity : AppCompatActivity() {
             viewModel.state.collectLatest { state ->
                 binding.seekPartner.progress = (state.partnerEmotionalIndicator * 100).toInt()
                 binding.imagePartnerEmoji.setImageResource(state.partnerEmotionalEmoji)
+                binding.textPartnerIndicator.text = state.partnerName
 
                 binding.seekUser.progress = (state.userEmotionalIndicator * 100).toInt()
                 binding.imageUserEmoji.setImageResource(state.userEmotionalEmoji)
+                binding.textUserIndicator.text = state.userName
             }
         }
     }
 
     private fun addEventListener() {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.events.collect { event ->
-                    when (event) {
-                        is UiEvent.ShowToast -> Toast.makeText(this@MainActivity, event.message, Toast.LENGTH_LONG).show()
-                        UiEvent.Navigate -> {
+            viewModel.events.collect { event ->
+                when (event) {
+                    is UiEvent.ShowToast -> Toast.makeText(this@MainActivity, event.message, Toast.LENGTH_LONG).show()
+                    UiEvent.Navigate -> { /* Nothing */
+                    }
 
-                        }
+                    UiEvent.InProgress -> {
+                        binding.layoutProgressbar.visibility = View.VISIBLE
+                        binding.progressbar.isActivated = true
+                    }
+
+                    UiEvent.OutProgress -> {
+                        binding.layoutProgressbar.visibility = View.GONE
+                        binding.progressbar.isActivated = false
                     }
                 }
             }
@@ -92,6 +103,10 @@ class MainActivity : AppCompatActivity() {
             viewModel.forgotPartnerId()
             router.navigateTo(Screen.EnterScreen(this))
             finish()
+        }
+
+        binding.buttonProfile.setOnClickListener {
+            router.navigateTo(Screen.ProfileScreen(this))
         }
 
         binding.seekUser.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -122,6 +137,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.buttonSave.setOnClickListener {
             viewModel.saveUserIndicator()
+        }
+
+        binding.buttonStatistic.setOnClickListener {
+            router.navigateTo(Screen.StatisticScreen(this))
         }
     }
 

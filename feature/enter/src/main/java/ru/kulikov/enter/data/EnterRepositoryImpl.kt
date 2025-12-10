@@ -19,6 +19,10 @@ class EnterRepositoryImpl @Inject constructor(private val sharedPreferences: App
 
     override fun getUserId(): Result<Int> = Result.Success(sharedPreferences.getUserId())
 
+    override fun forgotUser() {
+        sharedPreferences.forgotUserId()
+    }
+
     private suspend fun getPartnerFirebaseId(partnerId: Int): String? {
         return AppFirebase.usersReference
             .reference()

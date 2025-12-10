@@ -34,7 +34,7 @@ class UsersReference(private val databaseReference: DatabaseReference) {
 class UserReference(private val userReference: DatabaseReference) {
     fun idReference(): DatabaseReference = userReference.child(USER_ID_CHILD)
 
-    fun nameReference(name: String): DatabaseReference = userReference.child(NAME_CHILD)
+    fun nameReference(): DatabaseReference = userReference.child(NAME_CHILD)
 
     fun indicatorsDataReference(): IndicatorsDataReference = IndicatorsDataReference(userReference.child(INDICATORS_VALUE_CHILD))
 

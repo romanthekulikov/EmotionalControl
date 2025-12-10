@@ -52,5 +52,7 @@ dependencies {
     implementation(project(":feature:auth"))
     implementation(project(":feature:enter"))
     implementation(project(":feature:main"))
-    implementation(project(":feature:enter"))
+    implementation(project(":feature:profile"))
+    implementation(project(":feature:statistic"))
+
 }
