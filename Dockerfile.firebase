@@ -1,0 +1,20 @@
+FROM node:18
+
+# Устанавливаем Java 17 — ОБЯЗАТЕЛЬНО!
+RUN apt-get update && \
+    apt-get install -y openjdk-17-jre-headless && \
+    apt-get clean
+
+# Устанавливаем firebase-tools
+RUN npm install -g firebase-tools@13.0.2
+
+WORKDIR /app
+
+# Копируем конфиги
+COPY firebase.json .
+COPY .firebaserc .
+
+EXPOSE 4000 9000 9099
+
+# Запускаем эмуляторы
+CMD ["sh", "-c", "firebase emulators:start --project=test --only auth,database,ui"]
